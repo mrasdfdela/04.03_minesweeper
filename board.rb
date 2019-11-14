@@ -1,7 +1,8 @@
-require_relative tile
+require_relative "tile"
+require "byebug"
 
 class Board 
-    attr_reader :boardSize
+    attr_reader :boardSize, :board
     
     def initialize(size, difficulty=nil)
         @boardSize = genBoardSize(size, difficulty)
@@ -35,20 +36,39 @@ class Board
             board.each_with_index {|el, j|
                 
                 if mines.include?(i*(row.length) + j)
-                    board[i][j] = "X"
+                    board[i][j] = Tile.new(true)
                 else
-                    board[i][j] = " "
+                    board[i][j] = Tile.new
                 end
             }
         }
-        
-        board
     end
     
-    
+    def revealBoard
+        topRow = "  "
+        (0..boardSize["width"]).to_a.each { |el|
+            topRow += " #{el}"
+        }
+        print topRow
+        
+        board.each_with_index{ |row, idx|
+            boardRows = "#{idx} "
+            row.each{ |el|
+                puts el
+                # if el.mine == true
+                #     boardRows += " M"
+                # else
+                #     boardRows += "  "
+                # end
+            }
+        }
+        
+        return ""
+    end
 end
 
     
 
+debugger
 board = Board.new("small")
-puts board.boardSize
+# puts board.revealBoard

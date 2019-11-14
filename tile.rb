@@ -1,8 +1,14 @@
 class Tile
-    def initialize(row, column)
+    attr_reader :mine, :revealed
+    
+    def initialize(mine=false)
         @mine = false
         @revealed = false
-        @row = row
-        @column = column
+        @flagged = false
+        @wrongChoice = false
+    end
+    
+    def mine
+        mine = @mine
     end
 end
