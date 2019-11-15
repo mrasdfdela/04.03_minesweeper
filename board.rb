@@ -44,27 +44,6 @@ class Board
         }
     end
     
-    # def revealBoard
-    #     topRow = " "
-    #     (0...boardSize["width"]).to_a.each { |el|
-    #         topRow += " #{el}"
-    #     }
-    #     puts topRow
-        
-    #     board.each_with_index{ |row, idx|
-    #         boardRows = "#{idx}"
-    #         row.each{ |el|
-    #             if el.mine == true
-    #                 boardRows += " M"
-    #             else
-    #                 boardRows += "  "
-    #             end
-    #         }
-    #         puts boardRows
-    #     }
-    #     return ""
-    # end
-    
     def showBoard(type)
         topRow = " "
         (0...boardSize["width"]).to_a.each { |el|
@@ -98,10 +77,9 @@ class Board
         elsif el.revealed == true
             "  "
         else
-            "|_"
+            " *"
         end
     end
-end
 
 board = Board.new("small")
 board.showBoard("revealed")
