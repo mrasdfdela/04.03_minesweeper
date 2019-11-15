@@ -2,7 +2,7 @@ class Tile
     attr_reader :mine, :revealed
     
     def initialize(mine=false)
-        @mine = false
+        @mine = mine
         @revealed = false
         @flagged = false
         @wrongChoice = false

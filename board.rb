@@ -11,14 +11,14 @@ class Board
     
     def genBoardSize(size, difficulty)
         case size.downcase
-            
-        when "small"
+            when "small"
                 var = {"width"=>9, "height"=>9, "mines"=>10}
             when "medium"
                 var = {"width"=>16, "height"=>16, "mines"=>40}
             when "large"
                 var = {"width"=>30, "height"=>16, "mines"=>99}
-            else      
+            else
+            
         end
         
         var
@@ -45,30 +45,26 @@ class Board
     end
     
     def revealBoard
-        topRow = "  "
-        (0..boardSize["width"]).to_a.each { |el|
+        topRow = " "
+        (0...boardSize["width"]).to_a.each { |el|
             topRow += " #{el}"
         }
-        print topRow
+        puts topRow
         
         board.each_with_index{ |row, idx|
-            boardRows = "#{idx} "
+            boardRows = "#{idx}"
             row.each{ |el|
-                puts el
-                # if el.mine == true
-                #     boardRows += " M"
-                # else
-                #     boardRows += "  "
-                # end
+                if el.mine == true
+                    boardRows += " M"
+                else
+                    boardRows += "  "
+                end
             }
+            puts boardRows
         }
-        
         return ""
     end
 end
 
-    
-
-debugger
 board = Board.new("small")
-# puts board.revealBoard
+board.revealBoard
