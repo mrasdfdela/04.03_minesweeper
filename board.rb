@@ -17,11 +17,7 @@ class Board
                 var = {"width"=>16, "height"=>16, "mines"=>40}
             when "large"
                 var = {"width"=>30, "height"=>16, "mines"=>99}
-            else
-            
         end
-        
-        var
     end
     
     def createBoard(sizeHash)
@@ -43,7 +39,7 @@ class Board
             }
         }
     end
-    
+     
     def showBoard(type)
         topRow = " "
         (0...boardSize["width"]).to_a.each { |el|
@@ -62,7 +58,7 @@ class Board
                     boardRows += showBoardCurrentGame(el)
                 end        
             }
-            boardRows += "|\n"
+            boardRows += "\n"
         }
         
         puts boardRows
@@ -80,7 +76,8 @@ class Board
             " *"
         end
     end
+end
 
-board = Board.new("small")
-board.showBoard("revealed")
-board.showBoard("currentGame")
+# board = Board.new("small")
+# board.showBoard("revealed")
+# board.showBoard("currentGame")
