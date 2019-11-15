@@ -44,27 +44,65 @@ class Board
         }
     end
     
-    def revealBoard
+    # def revealBoard
+    #     topRow = " "
+    #     (0...boardSize["width"]).to_a.each { |el|
+    #         topRow += " #{el}"
+    #     }
+    #     puts topRow
+        
+    #     board.each_with_index{ |row, idx|
+    #         boardRows = "#{idx}"
+    #         row.each{ |el|
+    #             if el.mine == true
+    #                 boardRows += " M"
+    #             else
+    #                 boardRows += "  "
+    #             end
+    #         }
+    #         puts boardRows
+    #     }
+    #     return ""
+    # end
+    
+    def showBoard(type)
         topRow = " "
         (0...boardSize["width"]).to_a.each { |el|
             topRow += " #{el}"
         }
         puts topRow
         
+        boardRows = ""
         board.each_with_index{ |row, idx|
-            boardRows = "#{idx}"
+            boardRows += "#{idx}"
             row.each{ |el|
-                if el.mine == true
-                    boardRows += " M"
-                else
-                    boardRows += "  "
-                end
+                case type  
+                when "revealed"
+                    boardRows += showBoardRevealed(el)
+                when "currentGame"
+                    boardRows += showBoardCurrentGame(el)
+                end        
             }
-            puts boardRows
+            boardRows += "|\n"
         }
-        return ""
+        
+        puts boardRows
+    end
+    def showBoardRevealed(tileElement)
+        tileElement.mine == true ? " M" : "  "
+    end
+    def showBoardCurrentGame(tileElement)
+        el = tileElement
+        if el.flagged == true
+            " F"
+        elsif el.revealed == true
+            "  "
+        else
+            "|_"
+        end
     end
 end
 
 board = Board.new("small")
-board.revealBoard
+board.showBoard("revealed")
+board.showBoard("currentGame")
