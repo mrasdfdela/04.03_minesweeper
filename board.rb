@@ -64,10 +64,20 @@ class Board
         puts boardRows
     end
     def showBoardRevealed(tileElement)
-        tileElement.mine == true ? " M" : "  "
+        el = tileElement
+        if el.mineExploded == true
+            " X"
+        elsif el.mine == true 
+            " M"
+        elsif el.flagged == true
+            " F"
+        else
+            "  "
+        end
     end
     def showBoardCurrentGame(tileElement)
         el = tileElement
+        # puts tileElement #only displays tile obj id
         if el.flagged == true
             " F"
         elsif el.revealed == true
@@ -78,8 +88,8 @@ class Board
             " *"
         end
     end
+    
+    # def flagged=(str)
+    #     self.flagged = str
+    # end
 end
-
-# board = Board.new("small")
-# board.showBoard("revealed")
-# board.showBoard("currentGame")

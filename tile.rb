@@ -1,5 +1,6 @@
 class Tile
-    attr_reader :mine, :revealed, :flagged, :mineExploded
+    attr_reader :mine
+    attr_accessor :revealed, :flagged, :mineExploded
     
     def initialize(mine=false)
         @mine = mine
@@ -8,7 +9,7 @@ class Tile
         @mineExploded = false
     end
     
-    def mine
-        mine = @mine
-    end
+    # def mine
+    #     mine = @mine
+    # end
 end
