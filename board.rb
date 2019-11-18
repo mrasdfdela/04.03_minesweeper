@@ -72,6 +72,8 @@ class Board
             " F"
         elsif el.revealed == true
             "  "
+        elsif el.mineExploded == true
+            " X"
         else
             " *"
         end
