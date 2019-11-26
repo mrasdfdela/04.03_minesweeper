@@ -7,6 +7,7 @@ class Board
     def initialize(size, difficulty=nil)
         @boardSize = genBoardSize(size, difficulty)
         @board = createBoard(boardSize)
+        adjacentMines
     end
     
     def genBoardSize(size, difficulty)
@@ -39,6 +40,28 @@ class Board
             }
         }
     end
+    
+    def adjacentMines
+        board.each_with_index { |row, i|
+            board.each_with_index { |el, j|
+                (i-1 .. i+1).each { |y|
+                    (j-1 .. j+1).each { |x|
+                        if validPosition?(x,y) && [i,j] != [y,x]
+                            board[i][j].adjMines += 1 if board[y][x].mine == true
+                        end
+                        
+                    }
+                }
+            }
+        }
+        
+        # showBoard("adjMines")
+    end
+    
+    def validPosition?(x,y)
+        x.between?(0,self.boardSize["width"] -1 ) && 
+        y.between?(0,self.boardSize["height"]-1 )
+    end
      
     def showBoard(type)
         topRow = " "
@@ -56,6 +79,8 @@ class Board
                     boardRows += showBoardRevealed(el)
                 when "currentGame"
                     boardRows += showBoardCurrentGame(el)
+                # when "adjMines"
+                #     boardRows += showBoardAdjMines(el)
                 end        
             }
             boardRows += "\n"
@@ -84,12 +109,15 @@ class Board
             "  "
         elsif el.mineExploded == true
             " X"
+        elsif el.edge == true
+            " #{el.adjMines}"
         else
             " *"
         end
     end
-    
-    # def flagged=(str)
-    #     self.flagged = str
-    # end
+    def showBoardAdjMines(titleElement)
+        el = titleElement
+        " #{titleElement.adjMines.to_s}"
+    end
+
 end

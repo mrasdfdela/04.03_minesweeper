@@ -1,15 +1,14 @@
 class Tile
     attr_reader :mine
-    attr_accessor :revealed, :flagged, :mineExploded
+    attr_accessor :mineExploded, :flagged, :revealed, :edge , :adjMines
     
     def initialize(mine=false)
         @mine = mine
-        @revealed = false
-        @flagged = false
         @mineExploded = false
+        @flagged = false
+        @revealed = false
+        @edge = false
+        
+        @adjMines = 0
     end
-    
-    # def mine
-    #     mine = @mine
-    # end
 end

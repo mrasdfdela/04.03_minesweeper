@@ -29,9 +29,6 @@ class Game
             self.board.showBoard("revealed")
             self.board.showBoard("currentGame")
             userMove
-            
-            # self.board.showBoard("currentGame")
-            # @gameEnded = true
         end
     end
     
@@ -42,10 +39,10 @@ class Game
             x = entryLocation[0]
             y = entryLocation[1]
         
-        if entrySelection == "flag"
+        if entrySelection == "flag" && userBoard[y][x].revealed == false && userBoard[y][x].edge == false
             userBoard[y][x].flagged = !userBoard[y][x].flagged
-        else entrySelection == "reveal"
-            evaluateMove(userBoard, x,y)
+        elsif entrySelection == "reveal" && userBoard[y][x].edge == false
+            evaluateMove(userBoard,x,y)
         end
     end
     
@@ -60,12 +57,14 @@ class Game
         location
     end
     def validLocation?(arr)
-        yLoc, xLoc = arr[0].to_i, arr[1].to_i
+        
+        yLoc, xLoc = arr[1].to_i, arr[0].to_i
         if arr.length != 2 || 
            arr.all? { |num| num.is_a? Numeric } == false ||
            yLoc >= board.boardSize["height"] ||
            xLoc >= board.boardSize["width"] ||
-           board.board[yLoc][xLoc].revealed == true
+           board.board[yLoc][xLoc].revealed == true ||
+           board.board[yLoc][xLoc].flagged == true
            
             puts "Invalid entry!"
             false
@@ -93,10 +92,32 @@ class Game
             self.board.showBoard("revealed")
             @gameEnded = true
         else
-            scanBoard(userBoard)
+            evaluateCoordinates(userBoard, xCoor, yCoor)
         end
+        @gameEnded = true if allRevealed?
     end
-    def scanBoard(userBoard)
+    
+    def allRevealed?
+        # debugger
+        board.board.flatten.count { |tile| (tile.revealed == true || tile.edge == true) } == board.boardSize["width"] * board.boardSize["height"] - board.boardSize["mines"]
+    end
+    
+    def evaluateCoordinates(b, xCoor, yCoor)
+        (xCoor-1 .. xCoor+1).each { |x|
+            (yCoor-1 .. yCoor+1).each { |y|
+                if board.validPosition?(x,y)
+                    if b[y][x].revealed == true || b[y][x].edge == true || b[y][x].mine == true
+                    elsif b[y][x].adjMines == 0
+                        b[y][x].revealed = true
+                        evaluateCoordinates(b, x, y)
+                    # elsif b[y][x].adjMines > 0
+                        
+                    else
+                        b[y][x].edge = true
+                    end
+                end
+            }
+        }
         
     end
     
